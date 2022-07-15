@@ -7,32 +7,43 @@
 
 class BetterEnum {
 public:
-    template <typename T>
-    static T FromString([[maybe_unused]] const std::string& s) {}
-
-    template <typename T>
-    static std::string ToString([[maybe_unused]] T&& t) {
-        return "";
+    template <typename Enum>
+    static void FromString(Enum& e, const std::string& s) {
+        __BetterEnum_FromString(e, s);
     }
 
-    template <typename T, typename F>
-    static T From(F&& f) {
-        return static_cast<T>(f);
+    template <typename Enum>
+    static Enum FromString(const std::string& s) {
+        Enum e = static_cast<Enum>(0);
+
+        FromString(e, s);
+
+        return e;
     }
 
-    template <typename T, typename F>
-    static F To(T&& t) {
-        return static_cast<F>(t);
+    template <typename Enum>
+    static std::string ToString(Enum&& e) {
+        return __BetterEnum_ToString(e);
     }
 
-    template <typename T>
-    static T FromInteger(int32_t num) {
-        return From<T>(num);
+    template <typename Enum, typename T>
+    static Enum From(T&& t) {
+        return static_cast<Enum>(t);
     }
 
-    template <typename T>
-    static int32_t ToInteger(T&& t) {
-        return To<T, int32_t>(std::move(t));
+    template <typename Enum, typename T>
+    static T To(Enum&& e) {
+        return static_cast<T>(e);
+    }
+
+    template <typename Enum>
+    static Enum FromInteger(int32_t num) {
+        return From<Enum>(num);
+    }
+
+    template <typename Enum>
+    static int32_t ToInteger(Enum&& e) {
+        return To<Enum, int32_t>(std::move(e));
     }
 };
 

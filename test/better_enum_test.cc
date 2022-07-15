@@ -65,4 +65,14 @@ TEST_F(BetterEnumTest, better_enum_test) {
     EXPECT_EQ(24, BetterEnum::ToInteger(AEnum::Y));
     EXPECT_EQ(25, BetterEnum::ToInteger(AEnum::Z));
     EXPECT_EQ(255, BetterEnum::ToInteger(AEnum::END));
+
+    EXPECT_EQ("A", BetterEnum::ToString(AEnum::A));
+
+    EXPECT_EQ(AEnum::A, BetterEnum::FromString<AEnum>("A"));
+
+    {
+        AEnum e = AEnum::A;
+        BetterEnum::FromString(e, "A");
+        EXPECT_EQ(AEnum::A, e);
+    }
 }
