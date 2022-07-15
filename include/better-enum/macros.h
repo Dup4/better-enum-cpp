@@ -1,6 +1,6 @@
 #ifndef BETTER_ENUM_MACROS_H
 #define BETTER_ENUM_MACROS_H
 
-#define BETTER_ENUM(Enum, ...) __VA_ARGS__
+#define BETTER_ENUM(Enum, ...)
 
 #endif  // BETTER_ENUM_MACROS_H

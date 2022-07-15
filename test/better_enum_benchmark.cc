@@ -6,13 +6,13 @@
 
 static void BenchmarkFromInteger(benchmark::State& state) {
     for (auto _ : state) {
-        BetterEnum::FromInteger<A>(255);
+        BetterEnum::FromInteger<AEnum>(255);
     }
 }
 
 static void BenchmarkToInteger(benchmark::State& state) {
     for (auto _ : state) {
-        BetterEnum::ToInteger(A::END);
+        BetterEnum::ToInteger(AEnum::END);
     }
 }
 
