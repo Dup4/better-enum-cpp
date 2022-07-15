@@ -3,6 +3,7 @@
 #include "better-enum/better-enum.h"
 
 #include "./data/a.h"
+#include "./data/b.h"
 
 class BetterEnumTest : public testing::Test {
 protected:
@@ -75,4 +76,7 @@ TEST_F(BetterEnumTest, better_enum_test) {
         BetterEnum::FromString(e, "A");
         EXPECT_EQ(test::data::AEnum::A, e);
     }
+
+    EXPECT_EQ(B::UNKNOWN, BetterEnum::FromString<B>("dd"));
+    EXPECT_EQ("", BetterEnum::ToString(BetterEnum::From<B>(255)));
 }
