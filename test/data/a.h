@@ -3,6 +3,8 @@
 #include "better-enum/better-enum.h"
 #include "better-enum/macros.h"
 
+namespace test::data {
+
 enum class AEnum {
     A = 0,
     B,
@@ -34,3 +36,5 @@ enum class AEnum {
 };
 
 BETTER_ENUM(AEnum, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, END)
+
+}  // namespace test::data
