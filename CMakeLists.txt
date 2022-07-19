@@ -1,4 +1,4 @@
-option(better_enum_build_tests "Build all of better-enum's own tests." OFF)
+option(BETTER_ENUM_BUILD_TESTS "Build all of better-enum's own tests." OFF)
 
 cmake_minimum_required(VERSION 3.14)
 
@@ -22,7 +22,7 @@ include_directories(
 add_library(better-enum INTERFACE)
 target_include_directories(better-enum INTERFACE ${PROJECT_SOURCE_DIR}/include/)
 
-if(better_enum_build_tests)
+if(BETTER_ENUM_BUILD_TESTS)
     enable_testing()
 
     add_subdirectory(test/)
