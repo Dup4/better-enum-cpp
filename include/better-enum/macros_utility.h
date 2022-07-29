@@ -563,11 +563,11 @@
     }
 
 #define __BETTER_ENUM(Enum, ...)                                                  \
-    void __BetterEnum_FromString(Enum& e, const std::string& s) {                 \
+    inline void __BetterEnum_FromString(Enum& e, const std::string& s) {          \
         __BETTER_ENUM_EXPEND_FUNC_(Enum, __BETTER_ENUM_FROM_STRING, __VA_ARGS__); \
     }                                                                             \
                                                                                   \
-    std::string __BetterEnum_ToString(Enum e) {                                   \
+    inline std::string __BetterEnum_ToString(Enum e) {                            \
         __BETTER_ENUM_EXPEND_FUNC_(Enum, __BETTER_ENUM_TO_STRING, __VA_ARGS__)    \
                                                                                   \
         return "";                                                                \
