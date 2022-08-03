@@ -43,7 +43,7 @@ public:
 
     template <typename Enum>
     static int32_t ToInteger(Enum&& e) {
-        return To<Enum, int32_t>(std::move(e));
+        return To<Enum, int32_t>(std::forward<Enum>(e));
     }
 };
 
