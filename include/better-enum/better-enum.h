@@ -13,17 +13,29 @@ public:
     }
 
     template <typename Enum>
-    static Enum FromString(const std::string& s) {
-        Enum e = static_cast<Enum>(0);
-
-        FromString(e, s);
-
-        return e;
+    static std::optional<Enum> FromString(const std::string& s) {
+        Enum e;
+        return __BetterEnum_FromString(e, s);
     }
 
     template <typename Enum>
     static std::string ToString(Enum&& e) {
+        return __BetterEnum_ToString(e).value_or("");
+    }
+
+    template <typename Enum>
+    static std::optional<std::string> ToStringWithOptional(Enum&& e) {
         return __BetterEnum_ToString(e);
+    }
+
+    template <typename Enum>
+    static bool IsValidEnum(const std::string& s) {
+        return FromString<Enum>(s).has_value();
+    }
+
+    template <typename Enum>
+    static bool IsValidEnum(Enum&& e) {
+        return ToStringWithOptional(e).has_value();
     }
 
     template <typename Enum, typename T>

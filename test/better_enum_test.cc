@@ -77,6 +77,18 @@ TEST_F(BetterEnumTest, better_enum_test) {
         EXPECT_EQ(test::data::AEnum::A, e);
     }
 
-    EXPECT_EQ(B::UNKNOWN, BetterEnum::FromString<B>("dd"));
+    EXPECT_FALSE(BetterEnum::IsValidEnum(static_cast<B>(666)));
+    EXPECT_FALSE(BetterEnum::IsValidEnum<B>("ddddd"));
+
+    EXPECT_TRUE(BetterEnum::IsValidEnum<B>("Q"));
+    EXPECT_TRUE(BetterEnum::IsValidEnum<B>("W"));
+    EXPECT_TRUE(BetterEnum::IsValidEnum<B>("E"));
+    EXPECT_TRUE(BetterEnum::IsValidEnum<B>("R"));
+    EXPECT_TRUE(BetterEnum::IsValidEnum(B::Q));
+    EXPECT_TRUE(BetterEnum::IsValidEnum(B::W));
+    EXPECT_TRUE(BetterEnum::IsValidEnum(B::E));
+    EXPECT_TRUE(BetterEnum::IsValidEnum(B::R));
+
+    EXPECT_FALSE(BetterEnum::FromString<B>("dd").has_value());
     EXPECT_EQ("", BetterEnum::ToString(BetterEnum::From<B>(255)));
 }

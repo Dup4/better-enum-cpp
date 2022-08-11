@@ -1,8 +1,10 @@
 #ifndef BETTER_ENUM_MACROS_UTILITY_H
 #define BETTER_ENUM_MACROS_UTILITY_H
 
+#include <optional>
 #include <string>
 #include <type_traits>
+#include <unordered_map>
 
 #define __BETTER_ENUM_STR(x) #x
 #define __BETTER_ENUM_CONCAT(x, y) __BETTER_ENUM_CONCAT_(x, y)
@@ -551,26 +553,39 @@
 #define __BETTER_ENUM_EXPEND_FUNC_(Enum, func, ...) \
     __BETTER_ENUM_EXPEND_FUNC__(Enum, func, __BETTER_ENUM_NARGS_(__VA_ARGS__), __VA_ARGS__)
 
-#define __BETTER_ENUM_FROM_STRING(Enum, field) \
-    if (s == __BETTER_ENUM_STR(field)) {       \
-        e = Enum::field;                       \
-        return;                                \
-    }
+#define __BETTER_ENUM_FROM_STRING(Enum, field) mp.insert({__BETTER_ENUM_STR(field), Enum::field});
 
-#define __BETTER_ENUM_TO_STRING(Enum, field) \
-    if (e == Enum::field) {                  \
-        return __BETTER_ENUM_STR(field);     \
-    }
+#define __BETTER_ENUM_TO_STRING(Enum, field) mp.insert({Enum::field, __BETTER_ENUM_STR(field)});
 
-#define __BETTER_ENUM(Enum, ...)                                                  \
-    inline void __BetterEnum_FromString(Enum& e, const std::string& s) {          \
-        __BETTER_ENUM_EXPEND_FUNC_(Enum, __BETTER_ENUM_FROM_STRING, __VA_ARGS__); \
-    }                                                                             \
-                                                                                  \
-    inline std::string __BetterEnum_ToString(Enum e) {                            \
-        __BETTER_ENUM_EXPEND_FUNC_(Enum, __BETTER_ENUM_TO_STRING, __VA_ARGS__)    \
-                                                                                  \
-        return "";                                                                \
+#define __BETTER_ENUM(Enum, ...)                                                        \
+    template <typename Enum>                                                            \
+    inline std::optional<Enum> __BetterEnum_FromString(Enum& e, const std::string& s) { \
+        static const auto mp = [&]() {                                                  \
+            auto mp = std::unordered_map<std::string, Enum>();                          \
+            __BETTER_ENUM_EXPEND_FUNC_(Enum, __BETTER_ENUM_FROM_STRING, __VA_ARGS__);   \
+            return mp;                                                                  \
+        }();                                                                            \
+                                                                                        \
+        if (mp.count(s)) {                                                              \
+            e = mp.at(s);                                                               \
+            return mp.at(s);                                                            \
+        }                                                                               \
+                                                                                        \
+        return std::nullopt;                                                            \
+    }                                                                                   \
+                                                                                        \
+    inline std::optional<std::string> __BetterEnum_ToString(Enum e) {                   \
+        static const auto mp = [&]() {                                                  \
+            auto mp = std::unordered_map<Enum, std::string>();                          \
+            __BETTER_ENUM_EXPEND_FUNC_(Enum, __BETTER_ENUM_TO_STRING, __VA_ARGS__);     \
+            return mp;                                                                  \
+        }();                                                                            \
+                                                                                        \
+        if (mp.count(e)) {                                                              \
+            return mp.at(e);                                                            \
+        }                                                                               \
+                                                                                        \
+        return std::nullopt;                                                            \
     }
 
 #endif  // BETTER_ENUM_MACROS_UTILITY_H
