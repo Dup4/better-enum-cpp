@@ -2,7 +2,7 @@ option(BETTER_ENUM_BUILD_TESTS "Build all of better-enum's own tests." OFF)
 
 cmake_minimum_required(VERSION 3.14)
 
-project(better-enum VERSION 0.0.4)
+project(better-enum VERSION 0.0.5)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
