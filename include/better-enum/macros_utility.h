@@ -558,7 +558,6 @@
 #define __BETTER_ENUM_TO_STRING(Enum, field) mp.insert({Enum::field, __BETTER_ENUM_STR(field)});
 
 #define __BETTER_ENUM(Enum, ...)                                                        \
-    template <typename Enum>                                                            \
     inline std::optional<Enum> __BetterEnum_FromString(Enum& e, const std::string& s) { \
         static const auto mp = [&]() {                                                  \
             auto mp = std::unordered_map<std::string, Enum>();                          \
