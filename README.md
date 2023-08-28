@@ -7,4 +7,4 @@
 [![codecov](https://codecov.io/gh/Dup4/better-enum-cpp/branch/main/graph/badge.svg)](https://codecov.io/gh/Dup4/better-enum-cpp)
 [![GitHub release](https://img.shields.io/github/release/Dup4/better-enum-cpp.svg)](https://GitHub.com/Dup4/better-enum-cpp/releases/)
 
-Recommended to use [magic_enum](https://github.com/Neargye/magic_enum)
+Recommended to use [magic_enum](https://github.com/Neargye/magic_enum).
